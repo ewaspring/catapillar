@@ -1,0 +1,44 @@
+# Agent / 对话用意图
+
+INTENT_INPUT:
+  aliases:
+    - 你好
+    - 喂
+    - 嗨
+    - 你在吗
+    - 哥哥
+    - hey
+    - hi
+    - bro
+    - お兄ちゃん
+
+INTENT_PARSE:
+  aliases:
+    - 听懂
+    - 理解
+    - 明白
+    - 收到
+    - 我懂了
+    - 知道了
+    - understood
+    - 知ってる
+
+INTENT_DECIDE:
+  aliases:
+    - 想一想
+    - 决定一下
+    - 判断一下
+    - 思考
+    - think
+    - bus
+    - 考える
+
+INTENT_FEEDBACK:
+  aliases:
+    - 好了
+    - 完成了
+    - 已处理
+    - 回复
+    - finished
+    - daco
+    - 終わったよ

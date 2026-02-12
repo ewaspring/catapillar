@@ -1,0 +1,27 @@
+# 项目 X 的自定义意图
+
+INTENT_SAVE:
+  description: 保存内容到文件
+  aliases:
+    - 保存
+    - 写文件
+    - 存起来
+    - save
+    - persist
+
+INTENT_REPLY:
+  description: 生成并输出回复
+  aliases:
+    - 回复
+    - 回答
+    - 说话
+    - reply
+    - respond
+
+INTENT_GENERATE:
+  description: 生成内容
+  aliases:
+    - 生成
+    - 写内容
+    - create
+    - generate

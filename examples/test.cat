@@ -1,0 +1,20 @@
+# print and set
+置 变量1 10
+印 变量1
+印 hello
+调 夜 x
+
+# emotional line
+~ 印 hello
+! 印 警告
+? 调 夜 x
+< 印 回声
+
+# Annotation 注释
+~ 印 hello
+! 印 警告  # 少时诵诗书
+
+~~
+这是多行注释
+这些都应该被忽略
+~~

@@ -1,0 +1,20 @@
+# UI 层意图（只影响表现）
+
+INTENT_INPUT:
+  aliases:
+    - 点击
+    - 拖入
+    - 输入框
+    - 触发
+
+INTENT_ACTION:
+  aliases:
+    - 按钮
+    - 执行按钮
+    - 开始
+
+INTENT_FEEDBACK:
+  aliases:
+    - 提示
+    - 弹窗
+    - 显示结果

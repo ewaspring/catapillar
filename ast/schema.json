@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Catapillar AST Schema v0.1",
+  "description": "Schema definition for Catapillar v0.1 AST. This schema reflects the frozen semantic structure defined in spec documents.",
+  "type": "object",
+  "properties": {
+    "type": {
+      "const": "Program"
+    },
+    "flows": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Flow"
+      }
+    }
+  },
+  "required": ["type", "flows"],
+  "definitions": {
+    "Flow": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "Flow"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Segment"
+          }
+        }
+      },
+      "required": ["type", "segments"]
+    },
+    "Segment": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "Segment"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Line"
+          }
+        }
+      },
+      "required": ["type", "lines"]
+    },
+    "Line": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "const": "Line"
+        },
+        "action": {
+          "$ref": "#/definitions/ActionID"
+        },
+        "args": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Atom"
+          }
+        },
+        "line_state": {
+          "$ref": "#/definitions/LineState"
+        }
+      },
+      "required": ["type", "action", "args", "line_state"]
+    },
+    "ActionID": {
+      "type": "string",
+      "enum": ["PRINT", "SET", "CALL"]
+    },
+    "Atom": {
+      "type": "string",
+      "description": "Unquoted symbol. Interpreted by mapper as variable or literal depending on scope."
+    },
+    "LineState": {
+      "type": "string",
+      "enum": ["~", ">", "<", "!", "?"]
+    }
+  }
+}
