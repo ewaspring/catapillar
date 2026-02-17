@@ -1,0 +1,42 @@
+# 基础意图（不依赖 UI / Agent / 项目）
+# 这是 Cat 的“骨骼层”
+
+INTENT_INPUT:
+  description: 外部输入 / 触发起点
+  aliases:
+    - 输入
+    - input
+    - start
+    - hello
+    - begin
+
+INTENT_PARSE:
+  description: 理解 / 解析输入内容
+  aliases:
+    - 解析
+    - 解析文本
+    - 理解
+    - parse
+    - understand
+
+INTENT_DECIDE:
+  description: 决策 / 分流
+  aliases:
+    - 决定
+    - 判断
+    - decide
+
+INTENT_ACTION:
+  description: 执行动作
+  aliases:
+    - 行动
+    - 执行
+    - act
+
+INTENT_FEEDBACK:
+  description: 回应 / 回馈 / 结束信号
+  aliases:
+    - 回馈
+    - 回应
+    - feedback
+    - done

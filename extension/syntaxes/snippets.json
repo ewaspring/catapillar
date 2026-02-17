@@ -1,0 +1,148 @@
+{
+  "Function Definition": {
+    "prefix": ["定", "def"],
+    "body": [
+      "定 ${1:name}:",
+      "${2:空}",
+      "终"
+    ],
+    "description": "Define a function (定义函数)"
+  },
+  "Function with Parameters": {
+    "prefix": ["定p", "defp"],
+    "body": [
+      "定 ${1:name} ${2:params}:",
+      "${3:空}",
+      "终"
+    ],
+    "description": "Define a function with parameters (带参数的函数)"
+  },
+  "If Statement": {
+    "prefix": ["若", "if"],
+    "body": [
+      "若 ${1:condition}:",
+      "${2:空}",
+      "终"
+    ],
+    "description": "If statement (条件语句)"
+  },
+  "If-Else Statement": {
+    "prefix": ["若否", "ifelse"],
+    "body": [
+      "若 ${1:condition}:",
+      "${2:空}",
+      "否则:",
+      "${3:空}",
+      "终"
+    ],
+    "description": "If-else statement (条件分支)"
+  },
+  "If-Elif-Else": {
+    "prefix": ["若又否", "ifelif"],
+    "body": [
+      "若 ${1:condition1}:",
+      "${2:空}",
+      "又若 ${3:condition2}:",
+      "${4:空}",
+      "否则:",
+      "${5:空}",
+      "终"
+    ],
+    "description": "If-elif-else (多条件分支)"
+  },
+  "While Loop": {
+    "prefix": ["当", "while"],
+    "body": [
+      "当 ${1:True}:",
+      "${2:空}",
+      "终"
+    ],
+    "description": "While loop (循环)"
+  },
+  "For Loop": {
+    "prefix": ["扭扭", "for"],
+    "body": [
+      "扭扭 ${1:item} in ${2:iterable}:",
+      "${3:空}",
+      "终"
+    ],
+    "description": "For loop (遍历循环)"
+  },
+  "Try-Except": {
+    "prefix": ["试", "try"],
+    "body": [
+      "试:",
+      "${1:空}",
+      "捕 ${2:Exception}:",
+      "${3:空}",
+      "终"
+    ],
+    "description": "Try-except block (异常处理)"
+  },
+  "Try-Except-Finally": {
+    "prefix": ["试终", "tryf"],
+    "body": [
+      "试:",
+      "${1:空}",
+      "捕 ${2:Exception}:",
+      "${3:空}",
+      "终于:",
+      "${4:空}",
+      "终"
+    ],
+    "description": "Try-except-finally (完整异常处理)"
+  },
+  "Set Variable": {
+    "prefix": ["置", "set"],
+    "body": [
+      "置 ${1:name} ${2:value}"
+    ],
+    "description": "Set variable (赋值)"
+  },
+  "Print": {
+    "prefix": ["印", "print"],
+    "body": [
+      "印 ${1:value}"
+    ],
+    "description": "Print output (打印)"
+  },
+  "Call Function": {
+    "prefix": ["调", "call"],
+    "body": [
+      "调 ${1:function}"
+    ],
+    "description": "Call function (调用函数)"
+  },
+  "Input": {
+    "prefix": ["input", "读入"],
+    "body": [
+      "置 ${1:name} input"
+    ],
+    "description": "Read user input (读取输入)"
+  },
+  "Calculator Pattern": {
+    "prefix": ["calc", "计算器"],
+    "body": [
+      "定 ${1:calc}:",
+      "当 True:",
+      "置 a input",
+      "置 num1 float a",
+      "置 op input",
+      "置 b input",
+      "置 num2 float b",
+      "",
+      "若 op 是 +:",
+      "置 res 加 num1 num2",
+      "印 res",
+      "又若 op 是 -:",
+      "置 res 减 num1 num2",
+      "印 res",
+      "终",
+      "终",
+      "终",
+      "",
+      "调 ${1:calc}"
+    ],
+    "description": "Calculator pattern (计算器模板)"
+  }
+}

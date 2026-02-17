@@ -1,0 +1,22 @@
+{
+  "extension.displayName": "Catapillar",
+  "extension.description": "Catapillar (.cat) 语言支持 — 支持中英文关键字的多语言DSL",
+  "configuration.title": "Catapillar",
+  "configuration.pythonPath": "用于转译和执行的Python解释器路径",
+  "configuration.projectRoot": "Catapillar项目根目录路径（包含tools/catapillar.py的目录）。留空则从工作区自动检测",
+  "configuration.diagnostics.enable": "启用实时语法检查和错误诊断",
+  "configuration.formatting.indentSize": "格式化时的缩进空格数（0 = 不缩进，Catapillar设计上无需缩进）",
+  "configuration.completion.showChineseKeywords": "在自动补全中显示中文关键字",
+  "configuration.completion.showEnglishKeywords": "在自动补全中显示英文关键字",
+  "command.run": "运行Catapillar文件",
+  "command.transpileToPython": "转译为Python",
+  "command.showAst": "显示AST",
+  "command.runInTerminal": "在终端中运行",
+  "debug.program": "要运行的.cat文件绝对路径",
+  "debug.mode": "执行模式：auto（自动检测）、python（转译为Python）、flow（运行时引擎）",
+  "debug.pythonPath": "Python解释器路径",
+  "debug.catapillarRoot": "Catapillar项目根目录路径",
+  "debug.stopOnEntry": "在第一行停止执行",
+  "debug.snippet.run": "运行和调试Catapillar .cat文件",
+  "debug.snippet.transpile": "将.cat文件转译为Python并运行"
+}

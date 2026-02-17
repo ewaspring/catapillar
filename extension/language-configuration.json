@@ -1,0 +1,22 @@
+{
+  "comments": {
+    "lineComment": "#",
+    "blockComment": ["~~", "~~"]
+  },
+  "brackets": [],
+  "autoClosingPairs": [
+    { "open": "~~", "close": "~~" }
+  ],
+  "surroundingPairs": [],
+  "folding": {
+    "markers": {
+      "start": "^\\s*(定|def|若|if|又若|elif|否则|else|当|while|扭扭|for|试|try|捕|except|终于|finally).*:\\s*$",
+      "end": "^\\s*(终|end|结束|完了)\\s*$"
+    }
+  },
+  "indentationRules": {
+    "increaseIndentPattern": "^\\s*(定|def|若|if|又若|elif|否则|else|当|while|扭扭|for|试|try|捕|except|终于|finally).*:\\s*(#.*)?$",
+    "decreaseIndentPattern": "^\\s*(终|end|结束|完了|又若|elif|否则|else|捕|except|终于|finally)\\b"
+  },
+  "wordPattern": "[\\w\\u4e00-\\u9fff\\u3040-\\u309f\\u30a0-\\u30ff]+"
+}

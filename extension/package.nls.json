@@ -1,0 +1,22 @@
+{
+  "extension.displayName": "Catapillar",
+  "extension.description": "Language support for Catapillar (.cat) — a multilingual DSL with Chinese and English keywords",
+  "configuration.title": "Catapillar",
+  "configuration.pythonPath": "Path to the Python interpreter used for transpilation and execution",
+  "configuration.projectRoot": "For Run and Debug: use Catapillar repo root (folder with tools/catapillar.py). Empty = workspace. Python on PATH required.",
+  "configuration.diagnostics.enable": "Enable real-time syntax checking and error diagnostics",
+  "configuration.formatting.indentSize": "Number of spaces for indentation when formatting (0 = no indentation, Catapillar is indent-free by design)",
+  "configuration.completion.showChineseKeywords": "Show Chinese keyword variants in auto-completion",
+  "configuration.completion.showEnglishKeywords": "Show English keyword variants in auto-completion",
+  "command.run": "Run Catapillar File",
+  "command.transpileToPython": "Transpile to Python",
+  "command.showAst": "Show AST",
+  "command.runInTerminal": "Run in Terminal",
+  "debug.program": "Absolute path to the .cat file to run",
+  "debug.mode": "Execution mode: auto (detect), python (transpile to Python), flow (runtime engine)",
+  "debug.pythonPath": "Path to the Python interpreter",
+  "debug.catapillarRoot": "Path to the Catapillar project root",
+  "debug.stopOnEntry": "Stop execution at the first line",
+  "debug.snippet.run": "Run and debug a Catapillar .cat file",
+  "debug.snippet.transpile": "Transpile a .cat file to Python and run it"
+}

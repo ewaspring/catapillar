@@ -1,0 +1,22 @@
+{
+  "extension.displayName": "Catapillar",
+  "extension.description": "Catapillar (.cat) 言語サポート — 中国語・英語キーワードを持つ多言語DSL",
+  "configuration.title": "Catapillar",
+  "configuration.pythonPath": "トランスパイルと実行に使用するPythonインタプリタのパス",
+  "configuration.projectRoot": "Catapillarプロジェクトルートへのパス（tools/catapillar.pyを含むディレクトリ）。空欄の場合はワークスペースから自動検出",
+  "configuration.diagnostics.enable": "リアルタイム構文チェックとエラー診断を有効にする",
+  "configuration.formatting.indentSize": "フォーマット時のインデントスペース数（0 = インデントなし、Catapillarは設計上インデント不要）",
+  "configuration.completion.showChineseKeywords": "自動補完で中国語キーワードを表示する",
+  "configuration.completion.showEnglishKeywords": "自動補完で英語キーワードを表示する",
+  "command.run": "Catapillarファイルを実行",
+  "command.transpileToPython": "Pythonにトランスパイル",
+  "command.showAst": "ASTを表示",
+  "command.runInTerminal": "ターミナルで実行",
+  "debug.program": "実行する.catファイルの絶対パス",
+  "debug.mode": "実行モード: auto（自動検出）、python（Pythonにトランスパイル）、flow（ランタイムエンジン）",
+  "debug.pythonPath": "Pythonインタプリタのパス",
+  "debug.catapillarRoot": "Catapillarプロジェクトルートのパス",
+  "debug.stopOnEntry": "最初の行で実行を停止する",
+  "debug.snippet.run": "Catapillar .catファイルを実行・デバッグ",
+  "debug.snippet.transpile": ".catファイルをPythonにトランスパイルして実行"
+}

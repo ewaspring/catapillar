@@ -1,0 +1,255 @@
+{
+  "name": "catapillar",
+  "displayName": "%extension.displayName%",
+  "description": "%extension.description%",
+  "version": "0.1.0",
+  "publisher": "catapillar-lang",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/catapillar-lang/catapillar"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Formatters",
+    "Debuggers",
+    "Linters"
+  ],
+  "keywords": [
+    "catapillar",
+    "cat",
+    "dsl",
+    "multilingual",
+    "中文编程"
+  ],
+  "activationEvents": [
+    "onLanguage:catapillar"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "catapillar",
+        "aliases": [
+          "Catapillar",
+          "catapillar",
+          "cat"
+        ],
+        "extensions": [
+          ".cat"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "catapillar",
+        "scopeName": "source.catapillar",
+        "path": "./syntaxes/catapillar.tmLanguage.json"
+      }
+    ],
+    "configuration": {
+      "title": "%configuration.title%",
+      "properties": {
+        "catapillar.pythonPath": {
+          "type": "string",
+          "default": "python",
+          "description": "%configuration.pythonPath%"
+        },
+        "catapillar.projectRoot": {
+          "type": "string",
+          "default": "",
+          "description": "%configuration.projectRoot%"
+        },
+        "catapillar.diagnostics.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%configuration.diagnostics.enable%"
+        },
+        "catapillar.formatting.indentSize": {
+          "type": "number",
+          "default": 0,
+          "description": "%configuration.formatting.indentSize%",
+          "minimum": 0,
+          "maximum": 8
+        },
+        "catapillar.completion.showChineseKeywords": {
+          "type": "boolean",
+          "default": true,
+          "description": "%configuration.completion.showChineseKeywords%"
+        },
+        "catapillar.completion.showEnglishKeywords": {
+          "type": "boolean",
+          "default": true,
+          "description": "%configuration.completion.showEnglishKeywords%"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "catapillar.run",
+        "title": "%command.run%",
+        "category": "Catapillar"
+      },
+      {
+        "command": "catapillar.transpileToPython",
+        "title": "%command.transpileToPython%",
+        "category": "Catapillar"
+      },
+      {
+        "command": "catapillar.showAst",
+        "title": "%command.showAst%",
+        "category": "Catapillar"
+      },
+      {
+        "command": "catapillar.runInTerminal",
+        "title": "%command.runInTerminal%",
+        "category": "Catapillar"
+      },
+      {
+        "command": "catapillar.runCodeLens",
+        "title": "Run",
+        "category": "Catapillar"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "catapillar.run",
+          "when": "editorLangId == catapillar",
+          "group": "catapillar@1"
+        },
+        {
+          "command": "catapillar.runInTerminal",
+          "when": "editorLangId == catapillar",
+          "group": "catapillar@1"
+        },
+        {
+          "command": "catapillar.transpileToPython",
+          "when": "editorLangId == catapillar",
+          "group": "catapillar@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "catapillar.run",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorLangId == catapillar"
+      },
+      {
+        "command": "catapillar.runInTerminal",
+        "key": "ctrl+shift+t",
+        "mac": "cmd+shift+t",
+        "when": "editorLangId == catapillar"
+      }
+    ],
+    "debuggers": [
+      {
+        "type": "catapillar",
+        "label": "Catapillar",
+        "languages": [
+          "catapillar"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "%debug.program%",
+                "default": "${file}"
+              },
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "auto",
+                  "python",
+                  "flow"
+                ],
+                "default": "auto",
+                "description": "%debug.mode%"
+              },
+              "pythonPath": {
+                "type": "string",
+                "default": "python",
+                "description": "%debug.pythonPath%"
+              },
+              "catapillarRoot": {
+                "type": "string",
+                "default": "",
+                "description": "%debug.catapillarRoot%"
+              },
+              "stopOnEntry": {
+                "type": "boolean",
+                "default": false,
+                "description": "%debug.stopOnEntry%"
+              }
+            }
+          }
+        },
+        "initialConfigurations": [
+          {
+            "type": "catapillar",
+            "request": "launch",
+            "name": "Run Catapillar File",
+            "program": "${file}",
+            "mode": "auto"
+          }
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Catapillar: Run File",
+            "description": "%debug.snippet.run%",
+            "body": {
+              "type": "catapillar",
+              "request": "launch",
+              "name": "Run Catapillar",
+              "program": "^\"\\${file}\"",
+              "mode": "auto"
+            }
+          },
+          {
+            "label": "Catapillar: Transpile to Python",
+            "description": "%debug.snippet.transpile%",
+            "body": {
+              "type": "catapillar",
+              "request": "launch",
+              "name": "Transpile to Python",
+              "program": "^\"\\${file}\"",
+              "mode": "python"
+            }
+          }
+        ]
+      }
+    ],
+    "snippets": [
+      {
+        "language": "catapillar",
+        "path": "./syntaxes/snippets.json"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "tsc --noEmit",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@types/node": "^20.0.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "vscode-nls": "^5.2.0"
+  }
+}
