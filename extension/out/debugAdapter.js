@@ -158,11 +158,12 @@ class CatapillarDebugAdapter {
         const mode = args.mode || 'auto';
         const pythonPath = args.pythonPath || 'python';
         const catapillarRoot = args.catapillarRoot || '';
+        const printAst = args.printAst ?? vscode.workspace.getConfiguration('catapillar').get('debug.printAst', 'off');
         // Find tools/catapillar.py relative to catapillarRoot or program
         const toolsPath = catapillarRoot
             ? path.join(catapillarRoot, 'tools', 'catapillar.py')
             : path.join(path.dirname(program), '..', 'tools', 'catapillar.py');
-        const cliArgs = [toolsPath, program, `--mode=${mode}`, '--exec'];
+        const cliArgs = [toolsPath, program, `--mode=${mode}`, '--exec', `--print-ast=${printAst}`];
         this.sendEvent('output', {
             category: 'console',
             output: `Running: ${pythonPath} ${cliArgs.join(' ')}\n`,

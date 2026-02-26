@@ -1,6 +1,7 @@
 /**
  * Catapillar tokenizer — TypeScript port of parser/tokenizer.py.
  * Converts raw source text into a flat list of Token objects.
+ * Supports emoji/kaomoji prefix: first token is stripped so "印" is recognized as action.
  */
 export interface Token {
     rawAction: string;

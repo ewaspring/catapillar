@@ -157,6 +157,7 @@ Output appears in the **Catapillar** output channel.
 | `catapillar.formatting.indentSize` | `0` | Spaces for formatting (0 = no indent) |
 | `catapillar.completion.showChineseKeywords` | `true` | Show Chinese keywords in completion |
 | `catapillar.completion.showEnglishKeywords` | `true` | Show English keywords in completion |
+| `catapillar.debug.printAst` | `off` | When running: `off` (no AST), `summary` (one-line), `full` (full AST JSON). Same behavior as CLI `--print-ast=` and PyCharm run config. |
 
 ---
 

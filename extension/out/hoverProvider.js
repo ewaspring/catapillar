@@ -64,6 +64,13 @@ class CatapillarHoverProvider {
                 return new vscode.Hover(md, wordRange);
             }
         }
+        // Null literals
+        if (keywords_1.NULL_LITERALS.includes(word)) {
+            const md = new vscode.MarkdownString();
+            md.appendMarkdown(`**${word}** — null / None\n\n`);
+            md.appendMarkdown(`Aliases: ${keywords_1.NULL_LITERALS.filter(l => l !== word).map(l => `\`${l}\``).join(', ')}`);
+            return new vscode.Hover(md, wordRange);
+        }
         // Check if it's a defined symbol
         return this.getSymbolHover(document, word, wordRange);
     }

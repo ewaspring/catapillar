@@ -165,6 +165,10 @@ export function parseSource(source: string): ParseResult {
 
             // Check for control keywords that end with colon
             if (['否则', 'else'].includes(blockName)) {
+                // ELSE is continuation of IF/ELIF chain — pop previous branch
+                if (blockStack.length > 0 && (blockStack[blockStack.length - 1] === 'IF' || blockStack[blockStack.length - 1] === 'ELIF')) {
+                    blockStack.pop();
+                }
                 blockStack.push('ELSE');
                 currentSegment.lines.push({
                     type: 'Line',
@@ -187,6 +191,10 @@ export function parseSource(source: string): ParseResult {
                 continue;
             }
             if (['终于', 'finally'].includes(blockName)) {
+                // FINALLY is continuation of TRY/EXCEPT chain — pop previous branch
+                if (blockStack.length > 0 && (blockStack[blockStack.length - 1] === 'TRY' || blockStack[blockStack.length - 1] === 'EXCEPT')) {
+                    blockStack.pop();
+                }
                 blockStack.push('FINALLY');
                 currentSegment.lines.push({
                     type: 'Line',
@@ -198,7 +206,8 @@ export function parseSource(source: string): ParseResult {
                 continue;
             }
 
-            // Regular block
+            // Named flow block (e.g. ~ 成功流程:) — push so matching 'end' pops
+            blockStack.push('FLOW_BLOCK');
             currentSegment.lines.push({
                 type: 'Block',
                 name: blockName,
@@ -254,8 +263,18 @@ export function parseSource(source: string): ParseResult {
 
             const actionId = ACTION_LOOKUP.get(lookupAction)!;
 
-            // Track block-opening actions
-            if (['DEF', 'IF', 'ELIF', 'WHILE', 'FOR', 'TRY', 'EXCEPT'].includes(actionId)) {
+            // Track block-opening actions (ELIF/EXCEPT replace previous branch on stack)
+            if (actionId === 'ELIF') {
+                if (blockStack.length > 0 && (blockStack[blockStack.length - 1] === 'IF' || blockStack[blockStack.length - 1] === 'ELIF')) {
+                    blockStack.pop();
+                }
+                blockStack.push(actionId);
+            } else if (actionId === 'EXCEPT') {
+                if (blockStack.length > 0 && (blockStack[blockStack.length - 1] === 'TRY' || blockStack[blockStack.length - 1] === 'EXCEPT')) {
+                    blockStack.pop();
+                }
+                blockStack.push(actionId);
+            } else if (['DEF', 'IF', 'WHILE', 'FOR', 'TRY'].includes(actionId)) {
                 blockStack.push(actionId);
             }
 

@@ -85,6 +85,12 @@
           "type": "boolean",
           "default": true,
           "description": "%configuration.completion.showEnglishKeywords%"
+        },
+        "catapillar.debug.printAst": {
+          "type": "string",
+          "enum": ["off", "summary", "full"],
+          "default": "off",
+          "description": "%configuration.debug.printAst%"
         }
       }
     },
@@ -241,7 +247,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "tsc --noEmit",
-    "package": "vsce package"
+    "package": "npx vsce package"
   },
   "devDependencies": {
     "@types/vscode": "^1.85.0",

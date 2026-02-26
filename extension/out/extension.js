@@ -130,10 +130,11 @@ function findMainEntryLine(document) {
 }
 class CatapillarRunCodeLensProvider {
     provideCodeLenses(document, _token) {
+        const filePath = typeof document.uri.fsPath === 'string' ? document.uri.fsPath : (document.uri.path || '');
         const runCommand = {
             title: '$(play) Run',
             command: 'catapillar.runCodeLens',
-            arguments: [document.uri.fsPath],
+            arguments: [filePath || document.uri.toString()],
         };
         const mainLine = findMainEntryLine(document);
         if (mainLine >= 0) {
@@ -186,7 +187,12 @@ function runCatapillarFile(outputChannel, ...extraArgs) {
         if (!paths) {
             return;
         }
-        const filePath = editor.document.uri.fsPath;
+        const uri = editor.document.uri;
+        const filePath = typeof uri.fsPath === 'string' ? uri.fsPath : (uri.path || '');
+        if (!filePath) {
+            vscode.window.showWarningMessage('Cannot run: file has no path.');
+            return;
+        }
         const args = [paths.toolsPath, filePath, ...extraArgs].join(' ');
         const cmd = `${paths.pythonPath} ${args}`;
         outputChannel.clear();
@@ -211,21 +217,56 @@ function runCatapillarFileInTerminal() {
         vscode.window.showWarningMessage('No active Catapillar file.');
         return;
     }
+    const uri = editor.document.uri;
+    const filePath = typeof uri.fsPath === 'string' ? uri.fsPath : (uri.path || undefined);
+    if (!filePath) {
+        vscode.window.showWarningMessage('Cannot run: file has no path (save the document first).');
+        return;
+    }
     editor.document.save().then(() => {
-        runDocumentInTerminal(editor.document.uri.fsPath);
+        runDocumentInTerminal(filePath);
     });
+}
+function resolveFilePath(filePath) {
+    if (typeof filePath === 'string' && filePath.length > 0) {
+        if (filePath.startsWith('file:')) {
+            try {
+                const parsed = vscode.Uri.parse(filePath);
+                return parsed.fsPath || parsed.path || filePath;
+            }
+            catch {
+                return filePath;
+            }
+        }
+        return filePath;
+    }
+    const editor = vscode.window.activeTextEditor;
+    if (editor?.document?.uri && editor.document.languageId === LANGUAGE_ID) {
+        const u = editor.document.uri;
+        return typeof u.fsPath === 'string' && u.fsPath ? u.fsPath : (u.path || undefined);
+    }
+    return undefined;
 }
 function runDocumentInTerminal(filePath) {
     const paths = getCatapillarPaths();
     if (!paths) {
         return;
     }
-    const quotedPath = filePath.includes(' ') ? `"${filePath}"` : filePath;
-    const quotedTools = paths.toolsPath.includes(' ') ? `"${paths.toolsPath}"` : paths.toolsPath;
-    const cmd = `${paths.pythonPath} ${quotedTools} ${quotedPath} --exec`;
+    const resolved = resolveFilePath(filePath);
+    if (!resolved) {
+        vscode.window.showWarningMessage('Cannot run: no file path. Open a .cat file and try again.');
+        return;
+    }
+    const toolsPath = paths.toolsPath ?? '';
+    const pythonPath = paths.pythonPath ?? 'python';
+    const config = vscode.workspace.getConfiguration('catapillar');
+    const printAst = config.get('debug.printAst', 'off');
+    const quotedPath = resolved.includes(' ') ? `"${resolved}"` : resolved;
+    const quotedTools = toolsPath.includes(' ') ? `"${toolsPath}"` : toolsPath;
+    const cmd = `${pythonPath} ${quotedTools} ${quotedPath} --exec --print-ast=${printAst}`;
     const terminal = vscode.window.createTerminal({
         name: 'Catapillar',
-        cwd: paths.cwd,
+        cwd: paths.cwd ?? undefined,
     });
     terminal.show();
     terminal.sendText(cmd);

@@ -8,6 +8,7 @@
   "configuration.formatting.indentSize": "フォーマット時のインデントスペース数（0 = インデントなし、Catapillarは設計上インデント不要）",
   "configuration.completion.showChineseKeywords": "自動補完で中国語キーワードを表示する",
   "configuration.completion.showEnglishKeywords": "自動補完で英語キーワードを表示する",
+  "configuration.debug.printAst": "実行時のAST出力: off（出力なし）、summary（1行要約）、full（完全なAST JSON）",
   "command.run": "Catapillarファイルを実行",
   "command.transpileToPython": "Pythonにトランスパイル",
   "command.showAst": "ASTを表示",

@@ -21,6 +21,8 @@ export interface KeywordInfo {
 }
 /** All action keywords with their surface forms and documentation */
 export declare const KEYWORDS: KeywordInfo[];
+/** IN keyword (for FOR ... IN loops) */
+export declare const IN_KEYWORDS: KeywordInfo[];
 /** Struct keywords (block terminators) */
 export declare const STRUCT_KEYWORDS: KeywordInfo[];
 /** Line state symbols */
@@ -35,6 +37,8 @@ export declare const OPERATOR_KEYWORDS: {
         'zh-cn': string;
     };
 }[];
+/** Null literal keywords */
+export declare const NULL_LITERALS: string[];
 /** Map from surface form → action ID */
 export declare const ACTION_LOOKUP: Map<string, string>;
 /** Map from surface form → struct ID */

@@ -84,6 +84,17 @@ class CatapillarCompletionProvider {
             if (['调', 'call'].includes(firstWord)) {
                 items.push(...this.getSymbolCompletions(document, 'function'));
             }
+            // After 扭扭/for/回す — suggest 在/in/中
+            if (['扭扭', 'for', '回す'].includes(firstWord) && parts.length === 2) {
+                for (const kw of keywords_1.IN_KEYWORDS) {
+                    for (const form of kw.forms) {
+                        const item = new vscode.CompletionItem(form, vscode.CompletionItemKind.Keyword);
+                        item.detail = kw.description.en;
+                        item.documentation = new vscode.MarkdownString(kw.detail.en);
+                        items.push(item);
+                    }
+                }
+            }
             // After 置/set — suggest variable names as first arg, then functions/values
             if (['置', 'set'].includes(firstWord)) {
                 if (parts.length <= 2) {
@@ -102,6 +113,12 @@ class CatapillarCompletionProvider {
                         items.push(item);
                     }
                 }
+            }
+            // Null literals in expression context
+            for (const lit of keywords_1.NULL_LITERALS) {
+                const item = new vscode.CompletionItem(lit, vscode.CompletionItemKind.Value);
+                item.detail = 'null / None';
+                items.push(item);
             }
             // Always suggest defined symbols
             items.push(...this.getSymbolCompletions(document, 'all'));
@@ -144,7 +161,12 @@ class CatapillarCompletionProvider {
             item.documentation = new vscode.MarkdownString(kw.detail.en);
             // Add insert text with block structure for block-opening keywords
             if (kw.opensBlock) {
-                item.insertText = new vscode.SnippetString(`${form} \${1}:\n\${2}\n终`);
+                if (kw.actionId === 'FOR') {
+                    item.insertText = new vscode.SnippetString(`${form} \${1} 在 \${2}:\n\${3}\n终`);
+                }
+                else {
+                    item.insertText = new vscode.SnippetString(`${form} \${1}:\n\${2}\n终`);
+                }
             }
             const prefix = kw.category === 'control' ? '1'
                 : kw.category === 'action' ? '2'

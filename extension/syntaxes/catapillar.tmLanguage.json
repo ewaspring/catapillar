@@ -15,6 +15,8 @@
     { "include": "#arrow-operator" },
     { "include": "#comparison-operator" },
     { "include": "#boolean-constants" },
+    { "include": "#null-constant" },
+    { "include": "#in-keyword" },
     { "include": "#numeric" },
     { "include": "#identifiers" }
   ],
@@ -129,15 +131,15 @@
     },
     "block-end": {
       "name": "keyword.control.end.catapillar",
-      "match": "^\\s*(?:终|end|结束|完了)\\s*$"
+      "match": "^\\s*(?:终|end|结束|完了|終)\\s*$"
     },
     "control-keywords": {
       "name": "keyword.control.catapillar",
-      "match": "(?:^|(?<=\\s))(?:定|def|若|if|又若|elif|否则|else|当|while|扭扭|for|断|break|续|continue|回|return|试|try|捕|except|终于|finally|空|pass)(?=\\s|:|$)"
+      "match": "(?:^|(?<=\\s))(?:定|def|若|if|又若|elif|否则|else|当|while|扭扭|for|回す|断|break|续|continue|回|return|试|try|捕|except|终于|finally|空|pass)(?=\\s|:|$)"
     },
     "action-keywords": {
       "name": "keyword.other.action.catapillar",
-      "match": "(?:^|(?<=\\s))(?:印|print|置|set|调|call)(?=\\s|$)"
+      "match": "(?:^|(?<=\\s))(?:印|print|置|set|调|call|全局|global|全)(?=\\s|$)"
     },
     "arithmetic-keywords": {
       "name": "keyword.operator.arithmetic.catapillar",
@@ -149,11 +151,19 @@
     },
     "comparison-operator": {
       "name": "keyword.operator.comparison.catapillar",
-      "match": "(?:^|(?<=\\s))(?:是|不是|或|且)(?=\\s|$)"
+      "match": "(?:^|(?<=\\s))(?:是|不是|或|且|非|not)(?=\\s|$)"
     },
     "boolean-constants": {
       "name": "constant.language.catapillar",
-      "match": "(?:^|(?<=\\s))(?:True|False|None|真|假)(?=\\s|$)"
+      "match": "(?:^|(?<=\\s))(?:True|False|true|false|真|假|偽)(?=\\s|$)"
+    },
+    "null-constant": {
+      "name": "constant.language.null.catapillar",
+      "match": "(?:^|(?<=\\s))(?:无|none|無)(?=\\s|$)"
+    },
+    "in-keyword": {
+      "name": "keyword.control.loop.in.catapillar",
+      "match": "(?:^|(?<=\\s))(?:在|in|中)(?=\\s|$)"
     },
     "numeric": {
       "name": "constant.numeric.catapillar",

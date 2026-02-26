@@ -8,6 +8,7 @@
   "configuration.formatting.indentSize": "Number of spaces for indentation when formatting (0 = no indentation, Catapillar is indent-free by design)",
   "configuration.completion.showChineseKeywords": "Show Chinese keyword variants in auto-completion",
   "configuration.completion.showEnglishKeywords": "Show English keyword variants in auto-completion",
+  "configuration.debug.printAst": "AST dump when running: off (no dump), summary (one-line), full (full AST JSON)",
   "command.run": "Run Catapillar File",
   "command.transpileToPython": "Transpile to Python",
   "command.showAst": "Show AST",

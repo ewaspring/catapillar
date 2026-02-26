@@ -179,6 +179,7 @@ class CatapillarDebugAdapter implements vscode.DebugAdapter {
             mode?: string;
             pythonPath?: string;
             catapillarRoot?: string;
+            printAst?: string;
         } | undefined;
 
         if (!args?.program) {
@@ -190,13 +191,14 @@ class CatapillarDebugAdapter implements vscode.DebugAdapter {
         const mode = args.mode || 'auto';
         const pythonPath = args.pythonPath || 'python';
         const catapillarRoot = args.catapillarRoot || '';
+        const printAst = args.printAst ?? vscode.workspace.getConfiguration('catapillar').get<string>('debug.printAst', 'off');
 
         // Find tools/catapillar.py relative to catapillarRoot or program
         const toolsPath = catapillarRoot
             ? path.join(catapillarRoot, 'tools', 'catapillar.py')
             : path.join(path.dirname(program), '..', 'tools', 'catapillar.py');
 
-        const cliArgs = [toolsPath, program, `--mode=${mode}`, '--exec'];
+        const cliArgs = [toolsPath, program, `--mode=${mode}`, '--exec', `--print-ast=${printAst}`];
 
         this.sendEvent('output', {
             category: 'console',

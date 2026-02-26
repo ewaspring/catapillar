@@ -5,7 +5,7 @@
  * Mirrors parser/parser.py ACTION_IDS, STRUCT_IDS, and LINE_STATES.
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BLOCK_OPENERS = exports.KEYWORD_BY_FORM = exports.KEYWORD_BY_ID = exports.LINE_STATE_SET = exports.STRUCT_LOOKUP = exports.ACTION_LOOKUP = exports.OPERATOR_KEYWORDS = exports.LINE_STATES = exports.STRUCT_KEYWORDS = exports.KEYWORDS = void 0;
+exports.BLOCK_OPENERS = exports.KEYWORD_BY_FORM = exports.KEYWORD_BY_ID = exports.LINE_STATE_SET = exports.STRUCT_LOOKUP = exports.ACTION_LOOKUP = exports.NULL_LITERALS = exports.OPERATOR_KEYWORDS = exports.LINE_STATES = exports.STRUCT_KEYWORDS = exports.IN_KEYWORDS = exports.KEYWORDS = void 0;
 /** All action keywords with their surface forms and documentation */
 exports.KEYWORDS = [
     // === Actions ===
@@ -14,9 +14,9 @@ exports.KEYWORDS = [
         forms: ['print', '印'],
         description: { en: 'Print output', ja: '出力', 'zh-cn': '打印输出' },
         detail: {
-            en: 'Print values to standard output.\nSyntax: 印 value1 value2 ...',
-            ja: '標準出力に値を出力します。\n構文: 印 値1 値2 ...',
-            'zh-cn': '将值输出到标准输出。\n语法: 印 值1 值2 ...',
+            en: 'Print values to standard output.\nSyntax: 印 value1 value2 ...\nDo not use parentheses; variables are resolved by declaration above.',
+            ja: '標準出力に値を出力。\n構文: 印 値1 値2 ...\n括弧は使わない。',
+            'zh-cn': '将值输出到标准输出。\n语法: 印 值1 值2 ...\n不要用括号；变量由上文的声明解析。',
         },
         category: 'action',
         opensBlock: false,
@@ -26,9 +26,9 @@ exports.KEYWORDS = [
         forms: ['set', '置'],
         description: { en: 'Set variable', ja: '変数設定', 'zh-cn': '设置变量' },
         detail: {
-            en: 'Assign a value to a variable.\nSyntax: 置 name value\nSyntax: 置 name func arg',
-            ja: '変数に値を代入します。\n構文: 置 名前 値\n構文: 置 名前 関数 引数',
-            'zh-cn': '给变量赋值。\n语法: 置 变量名 值\n语法: 置 变量名 函数 参数',
+            en: 'Assign a value to a variable.\nSyntax: 置 name value\nUse bare names for variables; parentheses only for expression grouping (e.g. (a+b)*c).',
+            ja: '変数に値を代入。\n構文: 置 名前 値\n括弧は式のグループ化のみ。',
+            'zh-cn': '给变量赋值。\n语法: 置 变量名 值\n变量用裸名；括号仅用于表达式分组。',
         },
         category: 'action',
         opensBlock: false,
@@ -38,9 +38,9 @@ exports.KEYWORDS = [
         forms: ['call', '调'],
         description: { en: 'Call function', ja: '関数呼び出し', 'zh-cn': '调用函数' },
         detail: {
-            en: 'Call a defined function.\nSyntax: 调 function_name arg1 arg2 ...',
-            ja: '定義された関数を呼び出します。\n構文: 調 関数名 引数1 引数2 ...',
-            'zh-cn': '调用已定义的函数。\n语法: 调 函数名 参数1 参数2 ...',
+            en: 'Call a defined function.\nSyntax: 调 function_name arg1 arg2 ...\nNo parentheses around arguments (调 f a b, not 调 f(a b)).',
+            ja: '定義された関数を呼び出し。\n構文: 調 関数名 引数1 引数2 ...\n引数を括弧で囲まない。',
+            'zh-cn': '调用已定义的函数。\n语法: 调 函数名 参数1 参数2 ...\n参数不要用括号。',
         },
         category: 'action',
         opensBlock: false,
@@ -63,9 +63,9 @@ exports.KEYWORDS = [
         forms: ['if', '若'],
         description: { en: 'If condition', ja: '条件分岐', 'zh-cn': '条件判断' },
         detail: {
-            en: 'Conditional branch.\nSyntax: 若 condition:\n  body\n终',
-            ja: '条件分岐。\n構文: 若 条件:\n  本体\n終',
-            'zh-cn': '条件分支。\n语法: 若 条件:\n  执行体\n终',
+            en: 'Conditional branch.\nSyntax: 若 condition:\n  body\n终\nParentheses only for expression grouping (e.g. (a 且 b) 或 c), not around the whole condition.',
+            ja: '条件分岐。\n構文: 若 条件:\n  本体\n終\n括弧は式のグループ化のみ（例: (a 且 b) 或 c）。条件全体を括弧で囲まない。',
+            'zh-cn': '条件分支。\n语法: 若 条件:\n  执行体\n终\n括号仅用于表达式分组（如 (a 且 b) 或 c），勿包住整个条件。',
         },
         category: 'control',
         opensBlock: true,
@@ -108,12 +108,12 @@ exports.KEYWORDS = [
     },
     {
         actionId: 'FOR',
-        forms: ['for', '扭扭'],
+        forms: ['for', '扭扭', '回す'],
         description: { en: 'For loop', ja: 'forループ', 'zh-cn': '遍历循环' },
         detail: {
-            en: 'Iterate over a sequence.\nSyntax: 扭扭 var in iterable:',
-            ja: 'シーケンスを反復します。\n構文: 扭扭 変数 in イテラブル:',
-            'zh-cn': '遍历序列。\n语法: 扭扭 变量 in 序列:',
+            en: 'Iterate over a sequence.\nSyntax: 扭扭 var 在 iterable:\nDo not use parentheses around iterable (use 扭扭 x 在 列表, not 在 (列表)).',
+            ja: 'シーケンスを反復。\n構文: 扭扭 変数 在 イテラブル:\nイテラブルを括弧で囲まない。',
+            'zh-cn': '遍历序列。\n语法: 扭扭 变量 在 序列:\n不要在可迭代对象外加括号（用 扭扭 x 在 列表）。',
         },
         category: 'control',
         opensBlock: true,
@@ -147,9 +147,9 @@ exports.KEYWORDS = [
         forms: ['return', '回'],
         description: { en: 'Return value', ja: '値を返す', 'zh-cn': '返回值' },
         detail: {
-            en: 'Return a value from a function.\nSyntax: 回 value',
-            ja: '関数から値を返します。\n構文: 回 値',
-            'zh-cn': '从函数返回一个值。\n语法: 回 值',
+            en: 'Return a value from a function.\nSyntax: 回 value\nParentheses only for expression grouping (e.g. (a+b)*c), not 回 (expr).',
+            ja: '関数から値を返す。\n構文: 回 値\n括弧は式のグループ化のみ。',
+            'zh-cn': '从函数返回一个值。\n语法: 回 值\n括号仅用于表达式分组，勿写 回 (表达式)。',
         },
         category: 'control',
         opensBlock: false,
@@ -198,6 +198,18 @@ exports.KEYWORDS = [
             en: 'An empty statement (placeholder).\nSyntax: 空',
             ja: '空の文（プレースホルダ）。\n構文: 空',
             'zh-cn': '一个空语句（占位符）。\n语法: 空',
+        },
+        category: 'control',
+        opensBlock: false,
+    },
+    {
+        actionId: 'GLOBAL',
+        forms: ['global', '全局', '全'],
+        description: { en: 'Global declaration', ja: 'グローバル宣言', 'zh-cn': '全局声明' },
+        detail: {
+            en: 'Declare names as global so assignment inside a function mutates the global variable.\nSyntax: 全局 name1 name2',
+            ja: '関数内で代入時にグローバル変数を変更するよう宣言。\n構文: 全局 名前1 名前2',
+            'zh-cn': '声明为全局，以便在函数内赋值时修改全局变量。\n语法: 全局 名字1 名字2',
         },
         category: 'control',
         opensBlock: false,
@@ -252,11 +264,26 @@ exports.KEYWORDS = [
         opensBlock: false,
     },
 ];
+/** IN keyword (for FOR ... IN loops) */
+exports.IN_KEYWORDS = [
+    {
+        actionId: 'IN',
+        forms: ['in', '在', '中'],
+        description: { en: 'In (for loop)', ja: 'in（forループ）', 'zh-cn': '在（for 循环）' },
+        detail: {
+            en: 'FOR ... IN iterable. Syntax: 扭扭 var 在 iterable:',
+            ja: 'FOR ... IN イテラブル。構文: 扭扭 変数 在 イテラブル:',
+            'zh-cn': 'FOR ... IN 可迭代对象。语法: 扭扭 变量 在 可迭代:',
+        },
+        category: 'control',
+        opensBlock: false,
+    },
+];
 /** Struct keywords (block terminators) */
 exports.STRUCT_KEYWORDS = [
     {
         actionId: 'BLOCK_END',
-        forms: ['end', '结束', '完了', '终'],
+        forms: ['end', '结束', '完了', '终', '終'],
         description: { en: 'End block', ja: 'ブロック終了', 'zh-cn': '结束块' },
         detail: {
             en: 'End a block (function, if, while, try, etc.).\nSyntax: 终',
@@ -336,7 +363,11 @@ exports.OPERATOR_KEYWORDS = [
     { form: '不是', meaning: '!=', description: { en: 'not equals', ja: '等しくない', 'zh-cn': '不等于' } },
     { form: '或', meaning: 'or', description: { en: 'or', ja: 'または', 'zh-cn': '或' } },
     { form: '且', meaning: 'and', description: { en: 'and', ja: 'かつ', 'zh-cn': '且' } },
+    { form: '非', meaning: 'not', description: { en: 'not', ja: 'ではない', 'zh-cn': '非' } },
+    { form: 'not', meaning: 'not', description: { en: 'not', ja: 'ではない', 'zh-cn': '非' } },
 ];
+/** Null literal keywords */
+exports.NULL_LITERALS = ['无', 'none', '無'];
 // =====================================================
 // Lookup tables (built from definitions above)
 // =====================================================
@@ -358,12 +389,12 @@ for (const kw of exports.STRUCT_KEYWORDS) {
 exports.LINE_STATE_SET = new Set(['~', '>', '<', '!', '?']);
 /** Map from action ID → KeywordInfo */
 exports.KEYWORD_BY_ID = new Map();
-for (const kw of [...exports.KEYWORDS, ...exports.STRUCT_KEYWORDS, ...exports.LINE_STATES]) {
+for (const kw of [...exports.KEYWORDS, ...exports.STRUCT_KEYWORDS, ...exports.IN_KEYWORDS, ...exports.LINE_STATES]) {
     exports.KEYWORD_BY_ID.set(kw.actionId, kw);
 }
 /** Map from surface form → KeywordInfo */
 exports.KEYWORD_BY_FORM = new Map();
-for (const kw of [...exports.KEYWORDS, ...exports.STRUCT_KEYWORDS, ...exports.LINE_STATES]) {
+for (const kw of [...exports.KEYWORDS, ...exports.STRUCT_KEYWORDS, ...exports.IN_KEYWORDS, ...exports.LINE_STATES]) {
     for (const form of kw.forms) {
         exports.KEYWORD_BY_FORM.set(form, kw);
     }

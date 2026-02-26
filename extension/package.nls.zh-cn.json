@@ -8,6 +8,7 @@
   "configuration.formatting.indentSize": "格式化时的缩进空格数（0 = 不缩进，Catapillar设计上无需缩进）",
   "configuration.completion.showChineseKeywords": "在自动补全中显示中文关键字",
   "configuration.completion.showEnglishKeywords": "在自动补全中显示英文关键字",
+  "configuration.debug.printAst": "运行时的 AST 输出：off（不输出）、summary（一行摘要）、full（完整 AST JSON）",
   "command.run": "运行Catapillar文件",
   "command.transpileToPython": "转译为Python",
   "command.showAst": "显示AST",

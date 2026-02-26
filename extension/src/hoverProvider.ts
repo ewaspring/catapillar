@@ -4,7 +4,7 @@
  */
 
 import * as vscode from 'vscode';
-import { KEYWORD_BY_FORM, OPERATOR_KEYWORDS } from './keywords';
+import { KEYWORD_BY_FORM, OPERATOR_KEYWORDS, NULL_LITERALS } from './keywords';
 import { parseSource, getFunctionSymbols, getVariableSymbols } from './parser';
 
 export class CatapillarHoverProvider implements vscode.HoverProvider {
@@ -43,6 +43,14 @@ export class CatapillarHoverProvider implements vscode.HoverProvider {
                 md.appendMarkdown(`${op.description.en} | ${op.description['zh-cn']} | ${op.description.ja}`);
                 return new vscode.Hover(md, wordRange);
             }
+        }
+
+        // Null literals
+        if (NULL_LITERALS.includes(word)) {
+            const md = new vscode.MarkdownString();
+            md.appendMarkdown(`**${word}** — null / None\n\n`);
+            md.appendMarkdown(`Aliases: ${NULL_LITERALS.filter(l => l !== word).map(l => `\`${l}\``).join(', ')}`);
+            return new vscode.Hover(md, wordRange);
         }
 
         // Check if it's a defined symbol

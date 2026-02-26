@@ -85,19 +85,29 @@ def _ast_contains_arrows(ast: dict) -> bool:
     return False
 
 
+def _ast_summary(ast: dict) -> str:
+    """One-line summary of AST (flows, segment count, line count)."""
+    n_flows = len(ast.get("flows") or [])
+    n_lines = sum(1 for _ in _iter_lines_from_ast(ast))
+    return f"Program: {n_flows} flow(s), {n_lines} statement(s)"
+
+
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python tools/catapillar.py <file.cat> [--mode auto|flow|python] [--exec]")
+        print("Usage: python tools/catapillar.py <file.cat> [--mode auto|flow|python] [--exec] [--print-ast=off|summary|full]")
         sys.exit(1)
 
     # --- args
     path = sys.argv[1]
     mode = "auto"
     do_exec = False
+    print_ast = "off"  # off | summary | full
 
     for arg in sys.argv[2:]:
         if arg.startswith("--mode="):
             mode = arg.split("=", 1)[1].strip().lower()
+        elif arg.startswith("--print-ast="):
+            print_ast = arg.split("=", 1)[1].strip().lower()
         elif arg == "--exec":
             do_exec = True
 
@@ -134,8 +144,9 @@ def main():
     if chosen == "python":
         if map_program_to_python is None:
             print("[Catapillar Error] python_mapper not available, cannot generate python.")
-            print("\n=== AST ===")
-            print(ast)
+            if print_ast != "off":
+                print("\n=== AST ===")
+                print(ast if print_ast == "full" else _ast_summary(ast))
             return
 
         py_code = map_program_to_python(ast)
@@ -147,10 +158,27 @@ def main():
             print("\n=== EXEC ===")
             # Single namespace so top-level defs (e.g. 小计算器, main) are visible when main() runs
             glb = {"__name__": "__catapillar_exec__"}
-            exec(py_code, glb)
 
-        print("\n=== AST ===")
-        print(ast)
+            def _catapillar_index_set(name, container, index, value):
+                """Raise a clear error if index assignment target is a string (e.g. parser fallback)."""
+                if isinstance(container, str):
+                    raise TypeError(
+                        f"Cannot assign to index: variable {name!r} is a string. "
+                        "Use a list or dict literal (e.g. 置 列表 [a | b | c] or 映[key: val])."
+                    )
+                container[index] = value
+
+            glb["_catapillar_index_set"] = _catapillar_index_set
+            try:
+                exec(py_code, glb)
+            except Exception as e:
+                print(f"[Catapillar] Error while running your .cat file: {e}")
+                print("If the traceback points to '<string>', the error is in code generated from your .cat file.")
+                raise
+
+        if print_ast != "off":
+            print("\n=== AST ===")
+            print(ast if print_ast == "full" else _ast_summary(ast))
         return
 
     # chosen == "flow"
@@ -161,16 +189,18 @@ def main():
 
     if not flow:
         print("No executable flow generated.")
-        print("\n=== AST ===")
-        print(ast)
+        if print_ast != "off":
+            print("\n=== AST ===")
+            print(ast if print_ast == "full" else _ast_summary(ast))
         return
 
     # Step 3: Execute runtime
     ctx = {}
     run_flow(flow, ctx)
 
-    print("\n=== AST ===")
-    print(ast)
+    if print_ast != "off":
+        print("\n=== AST ===")
+        print(ast if print_ast == "full" else _ast_summary(ast))
 
 
 if __name__ == "__main__":
