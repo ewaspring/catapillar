@@ -18,6 +18,12 @@ This project is still evolving, and the design may change as experiments continu
 🚧 Early stage / experimental  
 APIs, syntax, and internal structure are not yet stable.
 
+## Running Catapillar
+
+- **VS Code / Cursor**: Install the extension from `extension/` (see [extension/README.md](extension/README.md)). Run and debug `.cat` files with the same CLI behavior (optional AST dump via `catapillar.debug.printAst`).
+- **PyCharm**: Use the run configurations in `.idea/runConfigurations/` (Catapillar Run, Catapillar Transpile) or see [pycharm/README.md](pycharm/README.md) for details. Same CLI and runtime as the extension.
+- **CLI**: `python tools/catapillar.py <file.cat> [--mode=auto|flow|python] [--exec] [--print-ast=off|summary|full]`.
+
 ## License
 
 MIT License.
