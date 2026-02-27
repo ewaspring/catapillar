@@ -1,0 +1,64 @@
+{
+  "INTENT_PARSE_URL": {
+    "aliases": [
+      "解析URL",
+      "parse_url"
+    ]
+  },
+  "INTENT_HTTP_REQUEST": {
+    "aliases": [
+      "调用接口",
+      "调用API",
+      "request_api"
+    ]
+  },
+  "INTENT_HANDLE_SUCCESS": {
+    "aliases": [
+      "处理成功",
+      "success",
+      "成功流程"
+    ]
+  },
+  "INTENT_HANDLE_ERROR": {
+    "aliases": [
+      "处理失败",
+      "error",
+      "失败流程"
+    ]
+  },
+  "INTENT_EXTRACT_DATA": {
+    "aliases": [
+      "提取数据",
+      "extract"
+    ]
+  },
+  "INTENT_OUTPUT_SUCCESS": {
+    "aliases": [
+      "输出成功",
+      "print_success"
+    ]
+  },
+  "INTENT_OUTPUT_ERROR": {
+    "aliases": [
+      "输出错误",
+      "print_error"
+    ]
+  },
+  "INTENT_INPUT": {
+    "aliases": [
+      "输入"
+    ]
+  },
+  "INTENT_PARSE": {
+    "aliases": [
+      "解析URL",
+      "解析",
+      "parse"
+    ]
+  },
+  "INTENT_FEEDBACK": {
+    "aliases": [
+      "回馈"
+    ]
+  }
+}

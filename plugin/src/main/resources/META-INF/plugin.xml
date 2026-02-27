@@ -1,0 +1,34 @@
+<idea-plugin>
+  <id>lang.catapillar</id>
+  <name>Catapillar</name>
+  <vendor>Catapillar Lang</vendor>
+  <description><![CDATA[
+    Language support for Catapillar (.cat files): syntax highlighting, code completion,
+    hover documentation, document outline, formatting, and run/debug. Same CLI and runtime
+    as the VS Code extension. Works in IntelliJ IDEA and PyCharm.
+  ]]></description>
+  <depends>com.intellij.modules.platform</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <fileType name="Catapillar" implementation="lang.catapillar.CatapillarFileType"
+              extensions="cat" language="Catapillar"/>
+    <lang.syntaxHighlighterFactory language="Catapillar"
+        implementationClass="lang.catapillar.CatapillarSyntaxHighlighterFactory"/>
+    <completion.contributor language="Catapillar"
+        implementationClass="lang.catapillar.CatapillarCompletionContributor"/>
+    <documentationProvider implementation="lang.catapillar.CatapillarDocumentationProvider"/>
+    <structureViewFactory implementation="lang.catapillar.CatapillarStructureViewFactory"/>
+    <lang.formatter language="Catapillar" implementationClass="lang.catapillar.CatapillarFormattingModelBuilder"/>
+    <lang.parserDefinition language="Catapillar" implementationClass="lang.catapillar.CatapillarParserDefinition"/>
+    <externalAnnotator language="Catapillar" implementationClass="lang.catapillar.CatapillarExternalAnnotator"/>
+    <runConfigurationType implementation="lang.catapillar.run.CatapillarRunConfigurationType"/>
+  </extensions>
+  <actions>
+    <group id="Catapillar.EditorActions" text="Catapillar">
+      <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+      <action id="Catapillar.Run" class="lang.catapillar.actions.CatapillarRunAction"
+              text="Run Catapillar File" description="Run the current .cat file"/>
+      <action id="Catapillar.Transpile" class="lang.catapillar.actions.CatapillarTranspileAction"
+              text="Transpile to Python" description="Transpile current file to Python"/>
+    </group>
+  </actions>
+</idea-plugin>

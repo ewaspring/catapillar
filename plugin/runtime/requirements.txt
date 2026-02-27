@@ -1,0 +1,2 @@
+# Optional: use .yaml lexicons directly. Without it, the bundled .json lexicons are used (no install needed).
+pyyaml>=5.1
